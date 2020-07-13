@@ -1,0 +1,27 @@
+-i https://pypi.org/simple
+certifi==2020.6.20
+chardet==3.0.4
+click==7.1.2
+cycler==0.10.0
+decorator==4.4.2
+dimod==0.9.3
+dwave-cloud-client==0.7.2
+dwave-neal==0.5.4
+dwave-networkx==0.8.6
+dwave-qbsolv==0.3.0
+dwave-system==0.9.6
+dwave-tabu==0.3.0
+homebase==1.0.1
+idna==2.10
+kiwisolver==1.2.0
+matplotlib==3.2.2
+minorminer==0.1.9
+networkx==2.4
+numpy==1.19.0
+plucky==0.4.3
+pyparsing==2.4.7
+pysocks==1.7.1
+python-dateutil==2.8.1
+requests[socks]==2.24.0
+six==1.15.0
+urllib3==1.25.9

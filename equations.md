@@ -1,5 +1,5 @@
 # Equations from paper
-
+A scratch pad to expand/simplify equations from the paper.
 ## Equation (8)
 Problem hamiltonian
 $$
