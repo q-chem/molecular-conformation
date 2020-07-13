@@ -1,20 +1,15 @@
-
-from collections import defaultdict
 import dimod
-from dwave.system import LeapHybridSampler
 from dwave_qbsolv import QBSolv
-import math
 import numpy as np
-from .helpers import HelperMethodsMixin
-from utils import plot_3d, visualize
+from helpers import EquationsMixin, UtilsMixin
 
 
-class MolecularConformation(HelperMethodsMixin):
-    def __init__(self):
-        self.set_parameters()
+class MolecularConformation(EquationsMixin, UtilsMixin):
+    def __init__(self, N_ATOMS, LATTICE_LENGTH):
+        self.set_parameters(N_ATOMS, LATTICE_LENGTH)
 
-    def set_parameters(self):
-        self.set_problem_parameters()
+    def set_parameters(self, N_ATOMS, LATTICE_LENGTH):
+        self.set_problem_parameters(N_ATOMS, LATTICE_LENGTH)
         self.set_hyper_parameters()
 
         # physical constants
@@ -23,9 +18,9 @@ class MolecularConformation(HelperMethodsMixin):
         self.e = 0.06                   # kcal
         self.bond_length = 1.5          # A approximate
 
-    def set_problem_parameters(self):
-        self.N_ATOMS = 4         # B in paper
-        self.LATTICE_LENGTH = 4
+    def set_problem_parameters(self, N_ATOMS, LATTICE_LENGTH):
+        self.N_ATOMS = N_ATOMS         # B in paper
+        self.LATTICE_LENGTH = LATTICE_LENGTH
         self.N_CELLS = self.LATTICE_LENGTH ** 3        # 4x4x4 = 64, N in paper
 
     def set_hyper_parameters(self):
@@ -92,7 +87,7 @@ class MolecularConformation(HelperMethodsMixin):
         """
         return self.A * self.constraint_Q(scale=True) + self.B * self.objective_Q(scale=True)
 
-    def solve(self, sampler='tabu'):
+    def solve(self, solver='tabu', top_samples=1, visualize=False):
         # get hamiltonian
         q = self.make_Q()
 
@@ -100,47 +95,13 @@ class MolecularConformation(HelperMethodsMixin):
         Q = dimod.BinaryQuadraticModel.from_numpy_matrix(q)
 
         # solve using QBSolv
-        response = QBSolv().sample(Q, verbosity=0, solver=sampler)
+        response = QBSolv().sample(Q, verbosity=0, solver=solver)
 
-        for sample_i, sample in enumerate(response.samples()[0:1]):
+        for sample_i, sample in enumerate(response.samples()[0:top_samples]):
             X = self.sample_to_x_ij_matrix(sample)
-            positions = self.sample_to_positions(sample)
             print(f'------- sample {sample_i} -------')
-            print('solutino is valid:', self.is_solution_valid(X))
+            print('solution is valid:', self.is_solution_valid(X))
             print('energy:', response.record.energy[sample_i])
-            plot_3d(positions)
-
-    def is_solution_valid(self, X):
-        """
-        Input: np solution matrix
-        Returns a boolean if the solution fulfills basic
-        problem constraints
-        """
-        every_atom_in_one_spot = (np.sum(X, 1) == 1).all()
-        spot_has_zero_or_one_atoms = (np.sum(X, 0) <= 1).all()
-        correct_number_of_atoms = np.sum(X) == self.N_ATOMS
-        return every_atom_in_one_spot and spot_has_zero_or_one_atoms and correct_number_of_atoms
-
-    def sample_to_x_ij_matrix(self, sample):
-        """
-        Turns a sample from the form of a dict {(i,j): 0|1, ...} into a np
-        0-1 matrix of size N_ATOMS x N_CELLS  
-        """
-        X = np.zeros([self.N_ATOMS, self.N_CELLS])
-        ones = filter(lambda i: i[1] == 1, dict(sample).items())
-        for qi, _ in ones:
-            (i, j) = self.q_to_ij(qi)
-            X[math.floor(i), j] = 1
-        return X
-
-    def sample_to_positions(self, sample):
-        """
-        Turns a sample from the form of a dict {(i,j): 0|1, ...} into a np
-        matrix of size N_ATOMS x 3 which is a list of the grid positions in R^3
-        """
-        positions = np.zeros([self.N_ATOMS, 3])
-        ones = filter(lambda i: i[1] == 1, dict(sample).items())
-        for qi, _ in ones:
-            (i, j) = self.q_to_ij(qi)
-            positions[math.floor(i), :] = self.index_to_location(j)
-        return positions
+            if visualize:
+                positions = self.sample_to_positions(sample)
+                self.plot_3d(positions)

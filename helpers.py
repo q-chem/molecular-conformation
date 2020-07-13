@@ -1,7 +1,10 @@
+import math
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
 
-class HelperMethodsMixin:
+class EquationsMixin:
     def leonard_jones_potential(self, distance):
         """
         eq (1) in paper, error in paper? Following cited paper.
@@ -28,6 +31,22 @@ class HelperMethodsMixin:
         bond = self.bond_stretching_potential(distance, is_next)
         return np.nan_to_num(lj + bond, 0)
 
+    def objective_value(self, solution):
+        total = 0
+        for (ij, x_ij) in enumerate(solution):
+            [i, j] = self.x_index(ij)
+            for (kl, x_kl) in enumerate(solution):
+                [k, l] = self.x_index(kl)
+                is_next = i + 1 == k
+                dist = self.distance(
+                    self.index_to_location(j),
+                    self.index_to_location(l)
+                )
+                total += self.total_potential(dist, is_next)
+        return total
+
+
+class UtilsMixin:
     def distance(self, x1, x2):
         """
         Computes the euclidean distance between points in R^3
@@ -56,16 +75,45 @@ class HelperMethodsMixin:
         mod = np.floor(div) % self.LATTICE_LENGTH
         return mod
 
-    def objective_value(self, solution):
-        total = 0
-        for (ij, x_ij) in enumerate(solution):
-            [i, j] = self.x_index(ij)
-            for (kl, x_kl) in enumerate(solution):
-                [k, l] = self.x_index(kl)
-                is_next = i + 1 == k
-                dist = self.distance(
-                    self.index_to_location(j),
-                    self.index_to_location(l)
-                )
-                total += self.total_potential(dist, is_next)
-        return total
+    def is_solution_valid(self, X):
+        """
+        Input: np solution matrix
+        Returns a boolean if the solution fulfills basic
+        problem constraints
+        """
+        every_atom_in_one_spot = (np.sum(X, 1) == 1).all()
+        spot_has_zero_or_one_atoms = (np.sum(X, 0) <= 1).all()
+        correct_number_of_atoms = np.sum(X) == self.N_ATOMS
+        return every_atom_in_one_spot and spot_has_zero_or_one_atoms and correct_number_of_atoms
+
+    def sample_to_x_ij_matrix(self, sample):
+        """
+        Turns a sample from the form of a dict {(i,j): 0|1, ...} into a np
+        0-1 matrix of size N_ATOMS x N_CELLS  
+        """
+        X = np.zeros([self.N_ATOMS, self.N_CELLS])
+        ones = filter(lambda i: i[1] == 1, dict(sample).items())
+        for qi, _ in ones:
+            (i, j) = self.q_to_ij(qi)
+            X[math.floor(i), j] = 1
+        return X
+
+    def sample_to_positions(self, sample):
+        """
+        Turns a sample from the form of a dict {(i,j): 0|1, ...} into a np
+        matrix of size N_ATOMS x 3 which is a list of the grid positions in R^3
+        """
+        positions = np.zeros([self.N_ATOMS, 3])
+        ones = filter(lambda i: i[1] == 1, dict(sample).items())
+        for qi, _ in ones:
+            (i, j) = self.q_to_ij(qi)
+            positions[math.floor(i), :] = self.index_to_location(j)
+        return positions
+
+    def plot_3d(self, positions):
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        ax.scatter(positions[:, 0], positions[:, 1],
+                   positions[:, 2], s=80, c='r')
+        ax.plot(positions[:, 0], positions[:, 1], positions[:, 2])
+        plt.show()
