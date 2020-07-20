@@ -31,6 +31,18 @@ class EquationsMixin:
         bond = self.bond_stretching_potential(distance, is_next)
         return np.nan_to_num(lj + bond, 0)
 
+    def potential_from_indices(self, i, j, k, l):
+        # j and l are the spot index, change to coordinates
+        j_loc = self.index_to_location(j)
+        l_loc = self.index_to_location(l)
+
+        # distance between j and l
+        dists = self.distance(j_loc, l_loc)
+
+        k_is_i_plus_1 = 1 * (k == i + 1)
+
+        return self.total_potential(dists, k_is_i_plus_1)
+
     def objective_value(self, solution):
         total = 0
         for (ij, x_ij) in enumerate(solution):

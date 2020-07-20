@@ -21,7 +21,7 @@ parser.add_argument(
     '-s', '--solver',
     type=str,
     default='tabu',
-    choices=['tabu', 'hybrid', 'embed', 'sim_anneal'],
+    choices=['tabu', 'hybrid', 'embed', 'sim_anneal', 'cplex'],
     help='which solver to use. Default "tabu"'
 )
 parser.add_argument(
