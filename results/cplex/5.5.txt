@@ -1,0 +1,8 @@
+creating model... DONE
+creating XML... DONE
+sending to NEOS server...Job number = 8384139
+Job password = BQcxYhwL
+Job 8384139 dispatched
+password: BQcxYhwL
+---------- Begin Solver Output -----------
+Got a timeout error after 8 hours

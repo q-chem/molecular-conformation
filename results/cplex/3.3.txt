@@ -1,0 +1,289 @@
+(code) ➜  code python molecularConformation/run.py --solver cplex -B 3 -L 3                                                                     [11:34:36]
+creating model... DONE
+creating XML... DONE
+sending to NEOS server...Job number = 8388242
+Job password = tAcWMdZo
+Traceback (most recent call last):
+  File "molecularConformation/run.py", line 30, in <module>
+    solver.solve()
+  File "/Users/jaykaron/quantum/code/molecularConformation/cplex/solver.py", line 81, in solve
+    send_to_neos(self.XML_FILEPATH)
+  File "/Users/jaykaron/quantum/code/molecularConformation/cplex/NeosClient.py", line 81, in main
+    jobNumber, password, offset)
+  File "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/xmlrpc/client.py", line 1112, in __call__
+    return self.__send(self.__name, args)
+  File "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/xmlrpc/client.py", line 1452, in __request
+    verbose=self.__verbose
+  File "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/xmlrpc/client.py", line 1154, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/xmlrpc/client.py", line 1187, in single_request
+    dict(resp.getheaders())
+xmlrpc.client.ProtocolError: <ProtocolError for neos-server.org:3333/RPC2: 504 Gateway Time-out>
+(code) ➜  code python molecularConformation/run.py --solver cplex -B 3 -L 3                                                                     [11:59:00]
+creating model... DONE
+creating XML... DONE
+sending to NEOS server...Job number = 8388255
+Job password = wHIkaQdU
+Job 8388255 dispatched
+password: wHIkaQdU
+---------- Begin Solver Output -----------
+Condor submit: 'neos.submit'
+Condor submit: 'watchdog.submit'
+Job submitted to NEOS HTCondor pool.
+Executing on prod-exec-2.neos-server.org
+
+Welcome to IBM(R) ILOG(R) CPLEX(R) Interactive Optimizer 12.9.0.0
+  with Simplex, Mixed Integer & Barrier Optimizers
+5725-A06 5725-A29 5724-Y48 5724-Y49 5724-Y54 5724-Y55 5655-Y21
+Copyright IBM Corp. 1988, 2019.  All Rights Reserved.
+
+Type 'help' for a list of available commands.
+Type 'help' followed by a command name for more
+information on commands.
+
+CPLEX> New value for default parallel thread count: 4
+CPLEX> Problem 'cplex.lp' read.
+Read time = 0.09 sec. (0.37 ticks)
+CPLEX> CPXPARAM_Threads                                 4
+Found incumbent of value 5.6046949e+14 after 0.00 sec. (0.03 ticks)
+Tried aggregator 1 time.
+MIP Presolve eliminated 1 rows and 1 columns.
+MIP Presolve added 6318 rows and 3159 columns.
+Reduced MIP has 6348 rows, 3240 columns, and 12798 nonzeros.
+Reduced MIP has 3240 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.02 sec. (0.89 ticks)
+Probing fixed 138 vars, tightened 0 bounds.
+Probing time = 0.43 sec. (14.66 ticks)
+Tried aggregator 1 time.
+MIP Presolve eliminated 4120 rows and 1053 columns.
+Reduced MIP has 2228 rows, 2187 columns, and 6572 nonzeros.
+Reduced MIP has 2187 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.03 sec. (7.11 ticks)
+Probing time = 0.03 sec. (5.11 ticks)
+Tried aggregator 1 time.
+Reduced MIP has 2228 rows, 2187 columns, and 6572 nonzeros.
+Reduced MIP has 2187 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.04 sec. (10.52 ticks)
+Probing time = 0.02 sec. (5.11 ticks)
+Clique table members: 7225.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: deterministic, using up to 4 threads.
+Root relaxation solution time = 0.05 sec. (9.27 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+*     0+    0                       5.60469e+14      -38.4233           100.00%
+*     0+    0                      5317170.9456      -38.4233           100.00%
+      0     0       -1.9212   134  5317170.9456       -1.9212      184  100.00%
+*     0+    0                      4352730.5934       -1.9212           100.00%
+*     0+    0                      3157421.8513       -1.9212           100.00%
+      0     0       -1.5075    97  3157421.8513       Cuts: 8      266  100.00%
+      0     0       -1.3190    64  3157421.8513      Cuts: 16      316  100.00%
+
+Repeating presolve.
+Tried aggregator 1 time.
+MIP Presolve eliminated 1079 rows and 1132 columns.
+MIP Presolve modified 80 coefficients.
+Reduced MIP has 1149 rows, 1055 columns, and 4431 nonzeros.
+Reduced MIP has 1055 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.02 sec. (5.88 ticks)
+Probing time = 0.02 sec. (4.57 ticks)
+Tried aggregator 1 time.
+Reduced MIP has 1149 rows, 1055 columns, and 4431 nonzeros.
+Reduced MIP has 1055 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.01 sec. (6.86 ticks)
+Represolve time = 0.08 sec. (21.09 ticks)
+Probing time = 0.02 sec. (4.57 ticks)
+Clique table members: 7462.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: deterministic, using up to 4 threads.
+Root relaxation solution time = 0.04 sec. (8.02 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+*     0+    0                      3157421.8513       -1.3190           100.00%
+      0     0       -1.3190    64  3157421.8513       -1.3190      457  100.00%
+      0     0       -1.2119    58  3157421.8513      Cuts: 59      516  100.00%
+      0     0       -1.1701    69  3157421.8513      Cuts: 23      562  100.00%
+      0     0       -1.1167    92  3157421.8513      Cuts: 21      611  100.00%
+      0     0       -1.0839    74  3157421.8513      Cuts: 20      654  100.00%
+      0     0       -1.0656    78  3157421.8513       Cuts: 9      693  100.00%
+      0     0       -1.0519    85  3157421.8513       Cuts: 9      744  100.00%
+      0     0       -1.0444    78  3157421.8513   ZeroHalf: 4      784  100.00%
+      0     0       -1.0387    74  3157421.8513       Cuts: 3      805  100.00%
+      0     0       -1.0347    87  3157421.8513  ZeroHalf: 13      838  100.00%
+      0     0       -1.0286    78  3157421.8513      Cuts: 14      880  100.00%
+      0     0       -1.0089    66  3157421.8513       Cuts: 9      944  100.00%
+      0     0       -0.9921    65  3157421.8513      Cuts: 16      992  100.00%
+      0     0       -0.9780    66  3157421.8513      Cuts: 12     1023  100.00%
+      0     0       -0.9689    79  3157421.8513      Cuts: 11     1051  100.00%
+      0     0       -0.9614    71  3157421.8513       Cuts: 5     1093  100.00%
+      0     0       -0.9585    79  3157421.8513       Cuts: 8     1116  100.00%
+      0     0       -0.9555    72  3157421.8513       Cuts: 8     1141  100.00%
+      0     0       -0.9462    65  3157421.8513       Cuts: 9     1194  100.00%
+      0     0       -0.9410    68  3157421.8513      Cuts: 14     1216  100.00%
+      0     0       -0.9374    63  3157421.8513       Cuts: 9     1233  100.00%
+      0     0       -0.9359    69  3157421.8513       Cuts: 6     1255  100.00%
+
+Clique cuts applied:  31
+Zero-half cuts applied:  17
+Lift and project cuts applied:  6
+Gomory fractional cuts applied:  2
+
+Root node processing (before b&c):
+  Real time             =    2.47 sec. (391.03 ticks)
+Parallel b&c, 4 threads:
+  Real time             =    0.00 sec. (0.00 ticks)
+  Sync time (average)   =    0.00 sec.
+  Wait time (average)   =    0.00 sec.
+                          ------------
+Total (root+branch&cut) =    2.47 sec. (391.03 ticks)
+
+Solution pool: 4 solutions saved.
+
+MIP - Integer optimal, tolerance (0.0001/1e-06):  Objective =  3.1574218513e+06
+Current MIP best bound =  3.1574212981e+06 (gap = 0.553271, 0.00%)
+Solution time =    2.47 sec.  Iterations = 1277  Nodes = 0 (1)
+Deterministic time = 391.03 ticks  (158.12 ticks/sec)
+
+CPLEX> Incumbent solution
+Variable Name           Solution Value
+x1                            1.000000
+x41                           1.000000
+x63                           1.000000
+ONE_VAR_CONSTANT              1.000000
+All other variables in the range 1-82 are 0.
+CPLEX> Executing on prod-exec-2.neos-server.org
+
+Welcome to IBM(R) ILOG(R) CPLEX(R) Interactive Optimizer 12.9.0.0
+  with Simplex, Mixed Integer & Barrier Optimizers
+5725-A06 5725-A29 5724-Y48 5724-Y49 5724-Y54 5724-Y55 5655-Y21
+Copyright IBM Corp. 1988, 2019.  All Rights Reserved.
+
+Type 'help' for a list of available commands.
+Type 'help' followed by a command name for more
+information on commands.
+
+CPLEX> New value for default parallel thread count: 4
+CPLEX> Problem 'cplex.lp' read.
+Read time = 0.09 sec. (0.37 ticks)
+CPLEX> CPXPARAM_Threads                                 4
+Found incumbent of value 5.6046949e+14 after 0.00 sec. (0.03 ticks)
+Tried aggregator 1 time.
+MIP Presolve eliminated 1 rows and 1 columns.
+MIP Presolve added 6318 rows and 3159 columns.
+Reduced MIP has 6348 rows, 3240 columns, and 12798 nonzeros.
+Reduced MIP has 3240 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.02 sec. (0.89 ticks)
+Probing fixed 138 vars, tightened 0 bounds.
+Probing time = 0.43 sec. (14.66 ticks)
+Tried aggregator 1 time.
+MIP Presolve eliminated 4120 rows and 1053 columns.
+Reduced MIP has 2228 rows, 2187 columns, and 6572 nonzeros.
+Reduced MIP has 2187 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.03 sec. (7.11 ticks)
+Probing time = 0.03 sec. (5.11 ticks)
+Tried aggregator 1 time.
+Reduced MIP has 2228 rows, 2187 columns, and 6572 nonzeros.
+Reduced MIP has 2187 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.04 sec. (10.52 ticks)
+Probing time = 0.02 sec. (5.11 ticks)
+Clique table members: 7225.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: deterministic, using up to 4 threads.
+Root relaxation solution time = 0.05 sec. (9.27 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+*     0+    0                       5.60469e+14      -38.4233           100.00%
+*     0+    0                      5317170.9456      -38.4233           100.00%
+      0     0       -1.9212   134  5317170.9456       -1.9212      184  100.00%
+*     0+    0                      4352730.5934       -1.9212           100.00%
+*     0+    0                      3157421.8513       -1.9212           100.00%
+      0     0       -1.5075    97  3157421.8513       Cuts: 8      266  100.00%
+      0     0       -1.3190    64  3157421.8513      Cuts: 16      316  100.00%
+
+Repeating presolve.
+Tried aggregator 1 time.
+MIP Presolve eliminated 1079 rows and 1132 columns.
+MIP Presolve modified 80 coefficients.
+Reduced MIP has 1149 rows, 1055 columns, and 4431 nonzeros.
+Reduced MIP has 1055 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.02 sec. (5.88 ticks)
+Probing time = 0.02 sec. (4.57 ticks)
+Tried aggregator 1 time.
+Reduced MIP has 1149 rows, 1055 columns, and 4431 nonzeros.
+Reduced MIP has 1055 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.01 sec. (6.86 ticks)
+Represolve time = 0.08 sec. (21.09 ticks)
+Probing time = 0.02 sec. (4.57 ticks)
+Clique table members: 7462.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: deterministic, using up to 4 threads.
+Root relaxation solution time = 0.04 sec. (8.02 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+*     0+    0                      3157421.8513       -1.3190           100.00%
+      0     0       -1.3190    64  3157421.8513       -1.3190      457  100.00%
+      0     0       -1.2119    58  3157421.8513      Cuts: 59      516  100.00%
+      0     0       -1.1701    69  3157421.8513      Cuts: 23      562  100.00%
+      0     0       -1.1167    92  3157421.8513      Cuts: 21      611  100.00%
+      0     0       -1.0839    74  3157421.8513      Cuts: 20      654  100.00%
+      0     0       -1.0656    78  3157421.8513       Cuts: 9      693  100.00%
+      0     0       -1.0519    85  3157421.8513       Cuts: 9      744  100.00%
+      0     0       -1.0444    78  3157421.8513   ZeroHalf: 4      784  100.00%
+      0     0       -1.0387    74  3157421.8513       Cuts: 3      805  100.00%
+      0     0       -1.0347    87  3157421.8513  ZeroHalf: 13      838  100.00%
+      0     0       -1.0286    78  3157421.8513      Cuts: 14      880  100.00%
+      0     0       -1.0089    66  3157421.8513       Cuts: 9      944  100.00%
+      0     0       -0.9921    65  3157421.8513      Cuts: 16      992  100.00%
+      0     0       -0.9780    66  3157421.8513      Cuts: 12     1023  100.00%
+      0     0       -0.9689    79  3157421.8513      Cuts: 11     1051  100.00%
+      0     0       -0.9614    71  3157421.8513       Cuts: 5     1093  100.00%
+      0     0       -0.9585    79  3157421.8513       Cuts: 8     1116  100.00%
+      0     0       -0.9555    72  3157421.8513       Cuts: 8     1141  100.00%
+      0     0       -0.9462    65  3157421.8513       Cuts: 9     1194  100.00%
+      0     0       -0.9410    68  3157421.8513      Cuts: 14     1216  100.00%
+      0     0       -0.9374    63  3157421.8513       Cuts: 9     1233  100.00%
+      0     0       -0.9359    69  3157421.8513       Cuts: 6     1255  100.00%
+
+Clique cuts applied:  31
+Zero-half cuts applied:  17
+Lift and project cuts applied:  6
+Gomory fractional cuts applied:  2
+
+Root node processing (before b&c):
+  Real time             =    2.47 sec. (391.03 ticks)
+Parallel b&c, 4 threads:
+  Real time             =    0.00 sec. (0.00 ticks)
+  Sync time (average)   =    0.00 sec.
+  Wait time (average)   =    0.00 sec.
+                          ------------
+Total (root+branch&cut) =    2.47 sec. (391.03 ticks)
+
+Solution pool: 4 solutions saved.
+
+MIP - Integer optimal, tolerance (0.0001/1e-06):  Objective =  3.1574218513e+06
+Current MIP best bound =  3.1574212981e+06 (gap = 0.553271, 0.00%)
+Solution time =    2.47 sec.  Iterations = 1277  Nodes = 0 (1)
+Deterministic time = 391.03 ticks  (158.12 ticks/sec)
+
+CPLEX> Incumbent solution
+Variable Name           Solution Value
+x1                            1.000000
+x41                           1.000000
+x63                           1.000000
+ONE_VAR_CONSTANT              1.000000
+All other variables in the range 1-82 are 0.
+CPLEX>  DONE
+cleaning up... COMPLETE
+(code) ➜  code                                                                                                                                  [12:06:47]
