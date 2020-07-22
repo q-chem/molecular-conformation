@@ -46,15 +46,10 @@ class EquationsMixin:
     def objective_value(self, solution):
         total = 0
         for (ij, x_ij) in enumerate(solution):
-            [i, j] = self.x_index(ij)
+            [i, j] = self.q_to_ij(ij)
             for (kl, x_kl) in enumerate(solution):
-                [k, l] = self.x_index(kl)
-                is_next = i + 1 == k
-                dist = self.distance(
-                    self.index_to_location(j),
-                    self.index_to_location(l)
-                )
-                total += self.total_potential(dist, is_next)
+                [k, l] = self.q_to_ij(kl)
+                total += self.potential_from_indices(i, j, k, l)
         return total
 
 
