@@ -1,4 +1,6 @@
 from helpers import EquationsMixin, UtilsMixin
+import json
+from pathlib import Path
 
 
 class MolecularConformation(EquationsMixin, UtilsMixin):
@@ -27,3 +29,24 @@ class MolecularConformation(EquationsMixin, UtilsMixin):
         Abstract method for solver specific parameters
         """
         pass
+
+    def save_result(self, solver_type, solution):
+        cwd = Path(__file__).parents[0]
+        data = []
+        file_path = Path.joinpath(cwd, "results/aggregated.json")
+        with open(file_path, 'r') as in_file:
+            data = json.load(in_file)
+
+        results = []
+        size_str = f'{self.N_ATOMS}x{self.LATTICE_LENGTH}'
+        try:
+            results = data[solver_type][size_str]
+        except KeyError:
+            data[solver_type][size_str] = results
+        indices = list(map(
+            lambda t: t[0],
+            filter(lambda t: t[1] == 1, enumerate(solution))
+        ))
+        results.append(indices)
+        with open(file_path, 'w') as out_file:
+            json.dump(data, out_file)
