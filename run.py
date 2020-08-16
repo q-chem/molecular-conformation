@@ -1,6 +1,6 @@
 import neal
 from dwavesolver import DwaveSolver
-from cplex.solver import CplexNeosSolver
+from cplexsolver.solver import CplexNeosSolver
 from dwave.system import LeapHybridSampler, DWaveSampler, EmbeddingComposite
 from cliparser import parser
 
