@@ -45,9 +45,10 @@ class EquationsMixin:
 
     def objective_value(self, solution):
         total = 0
-        for (ij, x_ij) in enumerate(solution):
+        ones = filter(lambda t: t[1] == 1, enumerate(solution))
+        for (ij, one) in ones:
             [i, j] = self.q_to_ij(ij)
-            for (kl, x_kl) in enumerate(solution):
+            for (kl, one) in ones:
                 [k, l] = self.q_to_ij(kl)
                 total += self.potential_from_indices(i, j, k, l)
         return total
