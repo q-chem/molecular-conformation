@@ -14,14 +14,15 @@ class EquationsMixin:
         with np.errstate(divide='ignore', invalid='ignore'):
             div = (self.SIGMA / distance)
             div6 = div ** 6
-            return 4 * self.e * (div6 ** 6 - 2 * div6)
+            result = self.e * (div6 ** 6 - 2 * div6)
+            return np.nan_to_num(result, 0)
 
-    def bond_stretching_potential(self, distance, is_next):
+    def bond_stretching_potential(self, distance):
         """
         eq (2) in paper, only applies if the atoms are neighbors
         is_next should be 0-1 matrix
         """
-        return is_next * self.BETA * (distance - self.bond_length) ** 2
+        return self.BETA * (distance - self.bond_length) ** 2
 
     def total_potential(self, distance, is_next):
         """
@@ -29,7 +30,7 @@ class EquationsMixin:
         """
         lj = self.leonard_jones_potential(distance)
         bond = self.bond_stretching_potential(distance, is_next)
-        return np.nan_to_num(lj + bond, 0)
+        return np.nan_to_num(bond, 0)
 
     def potential_from_indices(self, i, j, k, l):
         # j and l are the spot index, change to coordinates
@@ -37,11 +38,18 @@ class EquationsMixin:
         l_loc = self.index_to_location(l)
 
         # distance between j and l
-        dists = self.distance(j_loc, l_loc)
+        distance = self.distance(j_loc, l_loc)
 
-        k_is_i_plus_1 = 1 * (k == i + 1)
+        # boolean matrices or different properties
+        is_adjacent_atom = (np.abs(k - i) == 1)
+        is_the_same_atom = i == k
 
-        return self.total_potential(dists, k_is_i_plus_1)
+        full_lj = self.leonard_jones_potential(distance)
+        full_bond = self.bond_stretching_potential(distance)
+
+        bond = (1 * is_adjacent_atom) * full_bond
+        lj = 1 * np.logical_not(is_adjacent_atom | is_the_same_atom) * full_lj
+        return lj + bond
 
     def objective_value(self, solution):
         total = 0
