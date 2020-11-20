@@ -67,7 +67,7 @@ class UtilsMixin:
         """
         Computes the euclidean distance between points in R^3
         """
-        return np.sum((self.CELL_LENGTH * (x1 - x2)) ** 2, 0) ** 0.5
+        return self.CELL_LENGTH * np.sum((x1 - x2) ** 2, 0) ** 0.5
 
     def ij_to_q(self, i, j):
         """
