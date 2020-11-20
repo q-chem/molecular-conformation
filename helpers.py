@@ -129,7 +129,17 @@ class UtilsMixin:
     def plot_3d(self, positions):
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
+
         ax.scatter(positions[:, 0], positions[:, 1],
-                   positions[:, 2], s=80, c='r')
+                   positions[:, 2], s=250, c='r')
         ax.plot(positions[:, 0], positions[:, 1], positions[:, 2])
+
+        print("DISTANCES:")
+        for i in range(self.N_ATOMS - 1):
+            print(f"{i} to {i+1}",
+                  self.distance(positions[i, :], positions[i + 1, :]))
+
+        atoms = f'{self.N_ATOMS} atoms'
+        lattice = f'{self.LATTICE_LENGTH}x{self.LATTICE_LENGTH} lattice'
+        plt.title(f'{atoms} in a {lattice}')
         plt.show()
