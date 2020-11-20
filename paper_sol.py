@@ -25,4 +25,4 @@ positions = s.sample_to_positions(solution)
 # positions = np.array([[0, 3.0, 3], [1, 4, 2], [2, 3, 2], [2, 2, 2]])
 
 print("Energy:", s.objective_value(s.sample_to_x_ij_matrix(solution).flat))
-# s.plot_3d(positions)
+s.plot_3d(positions)
