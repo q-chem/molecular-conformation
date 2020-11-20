@@ -11,6 +11,9 @@ matplotlib = "*"
 numpy = "*"
 dwave-qbsolv = "*"
 dwave-neal = "*"
+python-dotenv = "*"
+qiskit = "*"
+pyomo = "*"
 
 [requires]
 python_version = "3.6"
