@@ -1,30 +1,32 @@
 import neal
 from dwavesolver import DwaveSolver
-from cplexsolver.solver import CplexNeosSolver
+from qiskitsolver import QiskitSolver
+from cplexsolver import CplexNeosSolver
 from dwave.system import LeapHybridSampler, DWaveSampler, EmbeddingComposite
 from cliparser import parser
 
 if __name__ == "__main__":
     args = parser.parse_args()
+    options = {}
     if args.solver in ['hybrid', 'embed', 'sim_anneal', 'tabu']:
-        controller = DwaveSolver(args.num_molecules, args.lattice_size)
+        solverClass = DwaveSolver
 
         if args.solver == 'hybrid':
-            solver = LeapHybridSampler()
+            options['solver'] = LeapHybridSampler()
         elif args.solver == 'embed':
-            solver = EmbeddingComposite(DWaveSampler())
+            options['solver'] = EmbeddingComposite(DWaveSampler())
         elif args.solver == 'sim_anneal':
-            solver = neal.SimulatedAnnealingSampler()
-        else:
-            # args.solver == 'tabu'
-            solver = 'tabu'
+            options['solver'] = neal.SimulatedAnnealingSampler()
+        elif args.solver == 'tabu':
+            options['solver'] = 'tabu'
 
-        controller.solve(
-            solver=solver,
-            visualize=args.visualize,
-            top_samples=args.sols_to_print
-        )
+        options['visualize'] = args.visualize
+        options['top_samples'] = args.sols_to_print
 
     elif args.solver == 'cplex':
-        controller = CplexNeosSolver(args.num_molecules, args.lattice_size)
-        controller.solve()
+        solverClass = CplexNeosSolver
+    elif args.solver == 'qiskit':
+        solverClass = QiskitSolver
+
+    solver = solverClass(args.num_molecules, args.lattice_size)
+    solver.solve(options)
