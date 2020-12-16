@@ -1,6 +1,7 @@
 import dimod
 import numpy as np
 from dwave_qbsolv import QBSolv
+from timeit import default_timer as timer
 
 from problem import MolecularConformation
 
@@ -74,7 +75,8 @@ class DwaveSolver(MolecularConformation):
             'solver': 'tabu',
             'top_samples': 1,
             'visualize': False,
-            'verbosity': 0
+            'verbosity': 0,
+            'repititions': 5
         }
         complete_options = DEFAULT_OPTIONS.copy()
         complete_options.update(options)
@@ -85,20 +87,33 @@ class DwaveSolver(MolecularConformation):
         # from np matrix to dwave representation
         Q = dimod.BinaryQuadraticModel.from_numpy_matrix(q)
 
-        # solve using QBSolv
-        response = QBSolv().sample(
-            Q,
-            verbosity=complete_options['verbosity'],
-            solver=complete_options['solver']
-        )
+        total_time = 0
+        for _ in range(complete_options['repititions']):
+            start_time = timer()
 
-        for sample_i, sample in enumerate(response.samples()[0:complete_options['top_samples']]):
-            X = self.sample_to_x_ij_matrix(sample)
-            print(f'------- sample {sample_i} -------')
-            print('solution is valid:', self.is_solution_valid(X))
-            print('energy:', response.record.energy[sample_i])
-            print('total U:', self.objective_value(X.flat))
+            # solve using QBSolv
+            response = QBSolv().sample(
+                Q,
+                verbosity=complete_options['verbosity'],
+                solver=complete_options['solver']
+            )
 
-            if complete_options['visualize']:
-                positions = self.sample_to_positions(sample)
-                self.plot_3d(positions)
+            end_time = timer()
+            if not complete_options['no_time']:
+                print(f'time to solve: {end_time - start_time} s')
+                total_time += end_time - start_time
+
+
+            for sample_i, sample in enumerate(response.samples()[0:complete_options['top_samples']]):
+                X = self.sample_to_x_ij_matrix(sample)
+                print(f'------- sample {sample_i} -------')
+                print('solution is valid:', self.is_solution_valid(X))
+                print('energy:', response.record.energy[sample_i])
+                print('total U:', self.objective_value(X.flat))
+
+                if complete_options['visualize']:
+                    positions = self.sample_to_positions(sample)
+                    self.plot_3d(positions)
+
+        avg_time = total_time / complete_options['repititions']
+        print(f'average time: {avg_time} s')

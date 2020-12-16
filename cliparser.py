@@ -32,8 +32,21 @@ parser.add_argument(
     required=False
 )
 parser.add_argument(
+    '-V', '--verbosity',
+    type=int,
+    help='natural number, higher is more verbose',
+    default=1
+)
+parser.add_argument(
     '-p', '--sols_to_print',
     type=int,
     help='How many of the top solutions to print out.',
     default=1
+)
+parser.add_argument(
+    '-t', '--no-time',
+    dest='no_time',
+    action='store_true',
+    help='optional flag, if included the length of time to solve will not be printed',
+    required=False
 )
